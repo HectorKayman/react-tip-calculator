@@ -6,7 +6,7 @@ export default function App() {
           Average Tip Calculator
         </div>
         <div className="card-body">
-          <h4 className="card-title">Enter the bill to calculate the tip</h4>
+          <Result />
           <Form />
         </div>
       </div>
@@ -14,37 +14,43 @@ export default function App() {
   );
 }
 
+function Result() {
+  return <h4 className="card-title">Enter the bill to calculate the tip</h4>;
+}
+
 function Form() {
   return (
     <form>
-      <div className="mb-3">
-        <label htmlFor="bill" className="form-label">
-          How much was the bill?
-        </label>
-        <input type="number" className="form-control" id="bill" />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="user-tip" className="form-label">
-          How did you like the service
-        </label>
-        <select className="form-select" name="user-tip" id="user-tip">
-          <option defaultValue={null}>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="friend-tip" className="form-label">
-          How did your friend like the service
-        </label>
-        <select className="form-select" name="friend-tip" id="friend-tip">
-          <option defaultValue={null}>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
+      <Bill />
+      <Tip />
+      <Tip />
     </form>
+  );
+}
+
+function Bill() {
+  return (
+    <div className="mb-3">
+      <label htmlFor="bill" className="form-label">
+        How much was the bill?
+      </label>
+      <input type="number" className="form-control" id="bill" />
+    </div>
+  );
+}
+
+function Tip() {
+  return (
+    <div className="mb-3">
+      <label htmlFor="user-tip" className="form-label">
+        How did you like the service
+      </label>
+      <select className="form-select" name="user-tip" id="user-tip">
+        <option defaultValue={null}>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
   );
 }
