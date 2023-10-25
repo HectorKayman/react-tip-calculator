@@ -5,6 +5,12 @@ export default function App() {
   const [userTip, setUserTip] = useState(0);
   const [friendTip, setFriendTip] = useState(0);
 
+  function handleReset() {
+    setBill(0);
+    setUserTip(0);
+    setFriendTip(0);
+  }
+
   return (
     <div className="container col-md-8 col-lg-6 mt-5">
       <div className="card shadow">
@@ -21,6 +27,7 @@ export default function App() {
             onSetUserTip={setUserTip}
             onSetFriendTip={setFriendTip}
           />
+          <Reset onReset={handleReset} />
         </div>
       </div>
     </div>
@@ -28,7 +35,7 @@ export default function App() {
 }
 
 function Result({ bill, userTip, friendTip }) {
-  if (bill === 0)
+  if (bill === 0 || isNaN(bill))
     return <h4 className="card-title">Enter the bill to calculate the tip</h4>;
 
   const avgTipPercent = (userTip + friendTip) / 2;
@@ -90,14 +97,23 @@ function Tip({ tip, onSetTip, children }) {
         className="form-select"
         name="user-tip"
         id="user-tip"
+        value={tip}
         onChange={(e) => onSetTip(Number(e.target.value))}
       >
-        <option value={tip}>Dissatisfied (0%)</option>
+        <option value="0">Dissatisfied (0%)</option>
         <option value="5">It was okay (5%)</option>
         <option value="10">It was pretty good (10%)</option>
         <option value="15">It was really good (15%)</option>
         <option value="20">Absolutely Amazing (20%)</option>
       </select>
     </div>
+  );
+}
+
+function Reset({ onReset }) {
+  return (
+    <button className="btn btn-primary px-4 rounded-pill" onClick={onReset}>
+      Reset
+    </button>
   );
 }
