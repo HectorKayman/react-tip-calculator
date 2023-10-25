@@ -38,8 +38,12 @@ function Form({ bill, userTip, friendTip }) {
   return (
     <form>
       <Bill bill={bill} />
-      <Tip tip={userTip} />
-      <Tip tip={friendTip} />
+      <Tip tip={userTip}>
+        How did <em>you</em> like the service?
+      </Tip>
+      <Tip tip={friendTip}>
+        How did your <em>friend</em> like the service?
+      </Tip>
     </form>
   );
 }
@@ -55,17 +59,19 @@ function Bill({ bill }) {
   );
 }
 
-function Tip({ tip }) {
+function Tip({ tip, children }) {
   return (
     <div className="mb-3">
       <label htmlFor="user-tip" className="form-label">
-        How did you like the service
+        {children}
       </label>
       <select className="form-select" name="user-tip" id="user-tip">
         <option defaultValue={null}>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option value="0">Dissatisfied (0%)</option>
+        <option value="5">It was okay (5%)</option>
+        <option value="10">It was pretty good (10%)</option>
+        <option value="15">It was really good (15%)</option>
+        <option value="20">Absolutely Amazing (20%)</option>
       </select>
     </div>
   );
