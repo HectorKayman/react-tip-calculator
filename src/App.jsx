@@ -13,7 +13,14 @@ export default function App() {
         </div>
         <div className="card-body">
           <Result bill={bill} userTip={userTip} friendTip={friendTip} />
-          <Form bill={bill} userTip={userTip} friendTip={friendTip} />
+          <Form
+            bill={bill}
+            userTip={userTip}
+            friendTip={friendTip}
+            onSetBill={setBill}
+            onSetUserTip={setUserTip}
+            onSetFriendTip={setFriendTip}
+          />
         </div>
       </div>
     </div>
@@ -21,53 +28,71 @@ export default function App() {
 }
 
 function Result({ bill, userTip, friendTip }) {
+  if (bill === 0)
+    return <h4 className="card-title">Enter the bill to calculate the tip</h4>;
+
   const avgTipPercent = (userTip + friendTip) / 2;
   const avgTip = (bill * avgTipPercent) / 100;
   const finalAmount = bill + avgTip;
 
   return (
     <h4 className="card-title">
-      {bill === 0
-        ? 'Enter the bill to calculate the tip'
-        : `You pay ${finalAmount} (${bill} + ${avgTip} tip)`}
+      You pay ${finalAmount} (${bill} + ${avgTip} tip)
     </h4>
   );
 }
 
-function Form({ bill, userTip, friendTip }) {
+function Form({
+  bill,
+  userTip,
+  friendTip,
+  onSetBill,
+  onSetUserTip,
+  onSetFriendTip,
+}) {
   return (
     <form>
-      <Bill bill={bill} />
-      <Tip tip={userTip}>
+      <Bill bill={bill} onSetBill={onSetBill} />
+      <Tip tip={userTip} onSetTip={onSetUserTip}>
         How did <em>you</em> like the service?
       </Tip>
-      <Tip tip={friendTip}>
+      <Tip tip={friendTip} onSetTip={onSetFriendTip}>
         How did your <em>friend</em> like the service?
       </Tip>
     </form>
   );
 }
 
-function Bill({ bill }) {
+function Bill({ bill, onSetBill }) {
   return (
     <div className="mb-3">
       <label htmlFor="bill" className="form-label">
         How much was the bill?
       </label>
-      <input type="number" className="form-control" id="bill" />
+      <input
+        type="number"
+        className="form-control"
+        id="bill"
+        value={bill}
+        onChange={(e) => onSetBill(Number(e.target.value))}
+      />
     </div>
   );
 }
 
-function Tip({ tip, children }) {
+function Tip({ tip, onSetTip, children }) {
   return (
     <div className="mb-3">
       <label htmlFor="user-tip" className="form-label">
         {children}
       </label>
-      <select className="form-select" name="user-tip" id="user-tip">
-        <option defaultValue={null}>Open this select menu</option>
-        <option value="0">Dissatisfied (0%)</option>
+      <select
+        className="form-select"
+        name="user-tip"
+        id="user-tip"
+        onChange={(e) => onSetTip(Number(e.target.value))}
+      >
+        <option value={tip}>Dissatisfied (0%)</option>
         <option value="5">It was okay (5%)</option>
         <option value="10">It was pretty good (10%)</option>
         <option value="15">It was really good (15%)</option>
