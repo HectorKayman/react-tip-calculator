@@ -21,7 +21,17 @@ export default function App() {
 }
 
 function Result({ bill, userTip, friendTip }) {
-  return <h4 className="card-title">Enter the bill to calculate the tip</h4>;
+  const avgTipPercent = (userTip + friendTip) / 2;
+  const avgTip = (bill * avgTipPercent) / 100;
+  const finalAmount = bill + avgTip;
+
+  return (
+    <h4 className="card-title">
+      {bill === 0
+        ? 'Enter the bill to calculate the tip'
+        : `You pay ${finalAmount} (${bill} + ${avgTip} tip)`}
+    </h4>
+  );
 }
 
 function Form({ bill, userTip, friendTip }) {
