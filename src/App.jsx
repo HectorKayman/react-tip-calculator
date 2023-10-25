@@ -1,4 +1,10 @@
+import { useState } from 'react';
+
 export default function App() {
+  const [bill, setBill] = useState(0);
+  const [userTip, setUserTip] = useState(0);
+  const [friendTip, setFriendTip] = useState(0);
+
   return (
     <div className="container col-md-8 col-lg-6 mt-5">
       <div className="card shadow">
@@ -6,29 +12,29 @@ export default function App() {
           Average Tip Calculator
         </div>
         <div className="card-body">
-          <Result />
-          <Form />
+          <Result bill={bill} userTip={userTip} friendTip={friendTip} />
+          <Form bill={bill} userTip={userTip} friendTip={friendTip} />
         </div>
       </div>
     </div>
   );
 }
 
-function Result() {
+function Result({ bill, userTip, friendTip }) {
   return <h4 className="card-title">Enter the bill to calculate the tip</h4>;
 }
 
-function Form() {
+function Form({ bill, userTip, friendTip }) {
   return (
     <form>
-      <Bill />
-      <Tip />
-      <Tip />
+      <Bill bill={bill} />
+      <Tip tip={userTip} />
+      <Tip tip={friendTip} />
     </form>
   );
 }
 
-function Bill() {
+function Bill({ bill }) {
   return (
     <div className="mb-3">
       <label htmlFor="bill" className="form-label">
@@ -39,7 +45,7 @@ function Bill() {
   );
 }
 
-function Tip() {
+function Tip({ tip }) {
   return (
     <div className="mb-3">
       <label htmlFor="user-tip" className="form-label">
